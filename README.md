@@ -54,8 +54,6 @@
   - 部件消息：部件静态消息和动态消息
   - 逻辑：部件作为逻辑的承载点
 
-
-
 视图模型结构如下表：
 
 | 构成     | 模型名称     | 详情                                                         |
@@ -78,12 +76,6 @@
 | 实体逻辑行为     | [ IPSDELogicAction](https://modelapi.ibizlab.cn/#/net/ibizsys/model/dataentity/action/IPSDELogicAction) |
 | 应用部件逻辑     | [ IPSControlLogic](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/IPSControlLogic) |
 | 、、、           | 、、、                                                       |
-
-逻辑根据不同的应用场景，处理了功能。
-
-示例
-
-
 
 ### 部件
 
@@ -117,9 +109,20 @@
 
 #### 部件成员
 
-部件成员，是部件的组成
+部件成员，是部件的组成部分，其中最具代表性的是表单部件及其成员。
 
+表单部件基于不同的功能，将其成员分为以下几个：
 
+| 名称名称             | 详情                                                         |
+| -------------------- | ------------------------------------------------------------ |
+| 表单按钮部件         | [ IPSDEFormButton](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEFormButton) |
+| 表单关系界面部件     | [ IPSDEFormDRUIPart](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEFormDRUIPart) |
+| 表单IFrame部件       | [ IPSDEFormIFrame](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEFormIFrame) |
+| 实体表单分页部件分页 | [IPSDEFormTabPage](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEFormTabPage) |
+| 实体表单分页         | [ IPSDEFormPage](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEFormPage) |
+| 、、、               | 、、、                                                       |
+
+作为表单的成员，他们共同构成了表单界面常规表现所需的模型结构，并在其中承担不同的更深层次的子内容展示。
 
 ## 数据服务
 
