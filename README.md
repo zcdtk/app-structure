@@ -1,6 +1,6 @@
 # 应用程序结构模型
 
-在常规的应用程序由多个部分组成，将一个应用通过不同的功能结构化拆解，会发现应用主要有基本应用组织、提供界面表现的视图、提供数据获取的数据服务和元数据等几个部分组成。
+在常规的应用程序（以下简称 app）由多个部分组成，将一个 app 根据不同的功能做结构化拆解，发现应用的主要组成有应用组织、视图、数据服务和元数据等几个部分组成。
 
 结构化应用程序的意义，在于开发人员对应用的构成，有一个清晰明了的定义，明确基于程序文件的那一部分，定了什么样的功能，在应用程序中，处于何种定位，方便开发人员理解和参与内容优化。
 
@@ -8,38 +8,103 @@
 
 ![应用程序结构](imgs/app-structure.png)
 
-
-
 ## 应用组织
 
-应用组织，在应用程序中，为其提供应用级功能性内容，成员如下：
+应用组织，在 app 中，为其提供应用级功能性内容，成员如下：
 
 - 主题：提供应用级样式，应用程序可以切换不同样式，通过主题切换，为界面提供不同的样式展现。
 - 多语言：多语言是前端必备的功能点，面向多样化的用户场景。
-- 资源：应用内图片、图标等资源文件。
-- 数据字典：数据信息的集合。
+- 资源：app 内图片、图标等资源文件。
+- 功能组件：登录页面、注销页面、404 页面、 500 页面等功能组件，该组件一般不会复用。
+
+应用组织的内容，多为 app 所必须的结构，补充 app 所能提供的功能。
+
+
+
+埃毕致前端模型，在适配应用组织成员上，做了比较多的结构设计，可以为 app 构建对于的应用组织成员。
 
 组织模型化支持如下表：
 
-| 应用组织 | 模型名称     | 详情                                                         |
-| -------- | ------------ | ------------------------------------------------------------ |
-| 主题     | 应用界面主题 | [IPSAppUITheme](https://modelapi.ibizlab.cn/#/net/ibizsys/model/app/theme/IPSAppUITheme) |
-| 多语言   | 应用多语言   | [IPSAppLan](https://modelapi.ibizlab.cn/#/net/ibizsys/model/app/IPSAppLan) |
-| 资源     | 系统图片资源 | [IPSSysImage](https://modelapi.ibizlab.cn/#/net/ibizsys/model/res/IPSSysImage) |
-| 数据字典 | 系统代码表   | [IPSCodeList](https://modelapi.ibizlab.cn/#/net/ibizsys/model/codelist/IPSCodeList) |
-| 、、、   | 、、、       | 、、、                                                       |
+| 应用组织 | 模型名称     | 详情                                                         | 备注    |
+| -------- | ------------ | ------------------------------------------------------------ | ------- |
+| 主题     | 应用界面主题 | [IPSAppUITheme](https://modelapi.ibizlab.cn/#/net/ibizsys/model/app/theme/IPSAppUITheme) |         |
+| 多语言   | 应用多语言   | [IPSAppLan](https://modelapi.ibizlab.cn/#/net/ibizsys/model/app/IPSAppLan) |         |
+| 资源     | 系统图片资源 | [IPSSysImage](https://modelapi.ibizlab.cn/#/net/ibizsys/model/res/IPSSysImage) |         |
+| 功能组件 | 应用功能页面 | [ IPSAppUtilPage](https://modelapi.ibizlab.cn/#/net/ibizsys/model/app/IPSAppUtilPage) |         |
+| . . .    | .  .  .      | .  .  .                                                      | .  .  . |
+
+应用界面主题模型，应该包含一整套的模型内容，主题所需的必备点在模型中，应该做关系约束比较好，有需要可以做模型补充，约束结构如下所示：
+
+![theme](imgs/theme.png)
+
+
 
 ## 视图
 
-视图是应用程序的内容单位，通过一系列操纵，切换不同的视图，呈现不同的内容。不同的视图内容，可以通过不同的模型来构建处理。
+视图时 app 的内容单位，视图本身属于组件的一种。
 
-在视图模型，不同的原因场景，将由不同的视图模型来处理，如表格视图、表单视图，都是因为具有不同的数据表现模型，所必须采用的模型结构。
+视图组为独立的功能结构来做说明，是因为视图本都属于 app 业务结构的抽象集合。一个视图，就是一个完整业务能力在 app 中的表现，app 通过不同的视图，展示不同业务需要，构建可以重复使用的内容单位。
 
-现已支持的模型化视图类型如下：
+文本将功能组件与视图做出区别，就在于组件是否被基于业务重复使用。功能组件一般只有特定条件才会被 app 访问，视图则会在整个 app 会被重复使用。
 
-![视图模型](imgs/view-model.png)
+视图成员如下：
 
-查看详情，[请点击](https://modelapi.ibizlab.cn/doc/model/model.htm)。
+- 逻辑：视图拥有的数据处理代码结构。
+
+- 视图模型：视图数据模型。
+- 提示消息：视图提示消息，一般放置静态的 Alert 类提示信息。
+- 布局：视图内容布局，将组件在不同的位置展示。
+- 组件：视图业务数据的抽象单位。
+  - 组件成员：部分组件会实现更加细化的抽象结构，如表单中的数据编辑对象。
+  - 提示消息：组件提示消息，一般分为静态和动态。静态消息和视图消息类似，动态消息主要为组件数据加载、处理后的提示信息。
+  - 逻辑：部分组件除了数据加载逻辑之外，会附加其他处理，如删除、编辑等，常见于表格或者列表中。
+
+
+
+埃毕致前端模型，针对视图提供了 [应用视图模型（IPSAppView）]( https://modelapi.ibizlab.cn/#/net/ibizsys/model/app/view/IPSAppView ) ，该视图模型为常规视图提供所需的视图布局、逻辑等一系列内容，以下几个结构以 应用视图模型适配视图成员做出说明。
+
+
+
+### 逻辑
+
+> 注：本章节中提到的部件，将在组件章节做出介绍。
+
+逻辑作为交互功能的代码单位，在视图中有非常重要的地位。它是视图业务的表现，也是数据处理的重要环节。
+
+埃毕致前端模型中，逻辑模型本身是中立的，它并不针对场景设计逻辑模型。一般是定义好模型之后，将模型挂载到视图上，模型落地即成为视图模型；将模型挂载到部件上，模型落地即成为部件模型。
+
+除了基于视图交互所定义的模型之外，埃毕致前端模型还预置引擎逻辑，数据校验等其他的逻辑模型。
+
+埃毕致前端现有的模型能力，基本能适配常见的视图逻辑内容，详情如下：
+
+| 模型名称             | 详情                                                         | 备注    |
+| -------------------- | ------------------------------------------------------------ | ------- |
+| 界面行为             | [ IPSUIAction](https://modelapi.ibizlab.cn/#/net/ibizsys/model/view/IPSUIAction) |         |
+| 应用视图逻辑         | [IPSAppViewLogic](https://modelapi.ibizlab.cn/#/net/ibizsys/model/app/view/IPSAppViewLogic) |         |
+| 应用视图逻辑引用视图 | [ IPSAppViewLogicRefView](https://modelapi.ibizlab.cn/#/net/ibizsys/model/app/view/logic/IPSAppViewLogicRefView) |         |
+| 应用视图新建数据逻辑 | [ IPSAppViewNewDataLogic](https://modelapi.ibizlab.cn/#/net/ibizsys/model/app/view/logic/IPSAppViewNewDataLogic) |         |
+| 实体打开数据视图逻辑 | [ IPSAppViewOpenDataLogic](https://modelapi.ibizlab.cn/#/net/ibizsys/model/app/view/logic/IPSAppViewOpenDataLogic) |         |
+| 应用部件逻辑         | [ IPSControlLogic](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/IPSControlLogic) |         |
+| 系统内置视图引擎     | [IPSViewEngine](https://modelapi.ibizlab.cn/#/net/ibizsys/model/view/IPSViewEngine) |         |
+| .  .  .              | .  .  .                                                      | .  .  . |
+
+埃毕致逻辑模型在 app 上的交互结构，可以从下图说明：
+
+![逻辑交互](imgs/logicaction.png)
+
+逻辑在视图和部件内部，本身具有完整的处理逻辑，作为载体，逻辑在其内部是封闭的。
+
+同时，视图和部件，也可以通过逻辑进行交互，它是二者数据流向的的通道。
+
+
+
+### 视图模型
+
+视图模型是由前端开发人员组织生成和维护的视图数据层。 
+
+在应用视图模型中，并没有提供相应的视图模型对象，给需要使用的 app 程序直接消费。但是，应用视图模型本身具备有视图模型所需变量，模型使用人员可以通过应用视图模型构建前端所需的
+
+
 
 ### 视图结构
 
@@ -61,21 +126,7 @@
 | 视图消息 | 视图消息     | [ IPSViewMsg](https://modelapi.ibizlab.cn/#/net/ibizsys/model/view/IPSViewMsg) |
 | 布局     | 视图布局面板 | [ IPSViewLayoutPanel](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/panel/IPSViewLayoutPanel) |
 
-### 逻辑
 
-在应用中，逻辑属于界面表现的核心部分，它是基于数据为目标、交互为过程的一系列行为。逻辑本身补足了静态界面在展现方面的缺点，带有业务的逻辑，更是大大丰富了界面的能力。
-
-根据不同的使用常见和提供的功能，将逻辑分为多种，如下表：
-
-| 模型名称         | 详情                                                         |
-| ---------------- | ------------------------------------------------------------ |
-| 系统逻辑         | [ IPSSysLogic](https://modelapi.ibizlab.cn/#/net/ibizsys/model/res/IPSSysLogic) |
-| 系统预置视图逻辑 | [IPSSysViewLogic](https://modelapi.ibizlab.cn/#/net/ibizsys/model/res/IPSSysViewLogic) |
-| 界面逻辑         | [ IPSViewLogic](https://modelapi.ibizlab.cn/#/net/ibizsys/model/view/IPSViewLogic) |
-| 实体逻辑         | [ IPSDELogic](https://modelapi.ibizlab.cn/#/net/ibizsys/model/dataentity/logic/IPSDELogic) |
-| 实体逻辑行为     | [ IPSDELogicAction](https://modelapi.ibizlab.cn/#/net/ibizsys/model/dataentity/action/IPSDELogicAction) |
-| 应用部件逻辑     | [ IPSControlLogic](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/IPSControlLogic) |
-| 、、、           | 、、、                                                       |
 
 ### 部件
 
