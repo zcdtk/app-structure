@@ -102,93 +102,137 @@
 
 视图模型是由前端开发人员组织生成和维护的视图数据层。 
 
-在应用视图模型中，并没有提供相应的视图模型对象，给需要使用的 app 程序直接消费。但是，应用视图模型本身具备有视图模型所需变量，模型使用人员可以通过应用视图模型构建前端所需的
+埃毕致应用视图模型中，并没有提供相应的视图模型对象，给需要使用的 app 程序直接消费。但是，应用视图模型本身具备有视图模型所需变量，模型使用人员可以通过应用视图模型构建前端所需视图模型内容。
 
 
 
-### 视图结构
+### 提示消息
 
-视图是 app 的主要表现内容，在应用程序中，内容的构成与业务的呈现，都由视图承载。
+提示消息，是视图丰富业务说明必不可少的一部分。
 
-- 视图模型：视图数据模型和展现逻辑
-- 视图消息：视图内容补充
-- 布局：视图内容结构化处理
-- 逻辑：系统逻辑在视图上的承载点
-- 部件：业务数据的不同抽象结构
-  - 部件成员：构建部件的内容
-  - 部件消息：部件静态消息和动态消息
-  - 逻辑：部件作为逻辑的承载点
+在视图中，数据的展现，总是单一而枯燥的，视图消息补充了这部分说明。对 app 而言，基于数据在视图中的业务逻辑更加规范，使用的方便都大大提高。
 
-视图模型结构如下表：
+埃毕致应用视图模型中，适配了提示消息，模型名称为视图消息，并由多种应用场景。其中，包括视图消息位置、视图消息模式（动态和静态）和根据用户权限动态获取视图消息等。
 
-| 构成     | 模型名称     | 详情                                                         |
-| -------- | ------------ | ------------------------------------------------------------ |
-| 视图消息 | 视图消息     | [ IPSViewMsg](https://modelapi.ibizlab.cn/#/net/ibizsys/model/view/IPSViewMsg) |
-| 布局     | 视图布局面板 | [ IPSViewLayoutPanel](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/panel/IPSViewLayoutPanel) |
+视图消息模型，对于日常的提示消息使用而言，已经适配了常规场景使用模式。
 
+模型如下：
+
+| 模型名称             | 详情                                                         | 备注 |
+| -------------------- | ------------------------------------------------------------ | ---- |
+| 视图消息             | [ IPSViewMsg](https://modelapi.ibizlab.cn/#/net/ibizsys/model/view/IPSViewMsg) |      |
+| 视图消息组           | [ IPSViewMsgGroup](https://modelapi.ibizlab.cn/#/net/ibizsys/model/view/IPSViewMsgGroup) |      |
+| 视图消息组成员       | [ IPSViewMsgGroupDetail](https://modelapi.ibizlab.cn/#/net/ibizsys/model/view/IPSViewMsgGroupDetail) |      |
+| 实体数据集合视图消息 | [ IPSDEDataSetViewMsg](https://modelapi.ibizlab.cn/#/net/ibizsys/model/view/IPSDEDataSetViewMsg) |      |
 
 
-### 部件
 
-在视图中，部件是视图内容数据表现最丰富的部分。数据的表现形式的不同，将其抽象成不同的业务对象，常见的有表单、表格、树、图表和日历等。
+### 布局
 
-常见的部件及模型如下：
+在视图中，布局作用是比较明显的，简单的说明，就是视图的那个位置放置什么样合适的内容。
 
-| 部件   | 模型名称       | 详情                                                         |
-| ------ | -------------- | ------------------------------------------------------------ |
-| 表格   | 实体表格       | [ IPSDEGrid](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/grid/IPSDEGrid) |
-| 表单   | 实体表单       | [ IPSDEForm](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEForm) |
-| 树     | 实体树视图部件 | [ IPSDETree](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/tree/IPSDETree) |
-| 菜单   | 应用菜单       | [ IPSAppMenu](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/menu/IPSAppMenu) |
-| 图表   | 实体图表控件   | [ IPSDEChart](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/chart/IPSDEChart) |
-| 日历   | 日历部件       | [ IPSCalendar](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/calendar/IPSCalendar) |
-| 向导   | 实体向导面板   | [IPSDEWizardPanel](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/wizardpanel/IPSDEWizardPanel) |
-| 列表   | 实体列表控件   | [IPSDEList](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/list/IPSDEList) |
-| 、、、 | 、、、         | 、、、                                                       |
+app  开发时，一般是事先设计好对于的原型图，然后通过代码实现，后期需要调整，开发人员也是通过代码能力调整，适配相应的业务需求。
 
-部件的组成，主要包括部件成员、部件消息和逻辑等。逻辑的结构，和视图基本一致，此处不做介绍。
+基于埃毕致应用视图模型的开发中，同样具备开发人员使用代码调整的方式，该方式对于任何技术人员的要求，都是一致的。
 
-#### 部件消息
+同时，埃毕致提供视图布局面板模型给开发人员和业务人员使用，它通过定义内容的放置位置，动态的发布文件布局内容，完成布局的功能。
 
-部件消息一般分为静态消息和动态消息两个部分，静态消息固定在部件的内容中，部件渲染，直接出现。动态消息一般在部件做逻辑交互时，做提示使用，丰富部件的业务逻辑交互效果。同时，部件消息提供多语言支持。
+模型如下：
 
-部件消息模型如下：
+| 模型名称     | 详情                                                         | 备注    |
+| ------------ | ------------------------------------------------------------ | ------- |
+| 布局面板     | [ IPSLayoutPanel](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/panel/IPSLayoutPanel) |         |
+| 视图布局面板 | [ IPSViewLayoutPanel](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/panel/IPSViewLayoutPanel) |         |
+| .  .  .      | .  .  .                                                      | .  .  . |
 
-| 模型名称 | 详情                                                         |
-| -------- | ------------------------------------------------------------ |
-| 部件消息 | [ IPSCtrlMsg](https://modelapi.ibizlab.cn/#/net/ibizsys/model/res/IPSCtrlMsg) |
+> 注：该布局模式，同时适配部件。
 
-#### 部件成员
 
-部件成员，是部件的组成部分，其中最具代表性的是表单部件及其成员。
 
-表单部件基于不同的功能，将其成员分为以下几个：
+### 组件
 
-| 名称名称             | 详情                                                         |
-| -------------------- | ------------------------------------------------------------ |
-| 表单按钮部件         | [ IPSDEFormButton](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEFormButton) |
-| 表单关系界面部件     | [ IPSDEFormDRUIPart](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEFormDRUIPart) |
-| 表单IFrame部件       | [ IPSDEFormIFrame](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEFormIFrame) |
-| 实体表单分页部件分页 | [IPSDEFormTabPage](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEFormTabPage) |
-| 实体表单分页         | [ IPSDEFormPage](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEFormPage) |
-| 、、、               | 、、、                                                       |
+组件， 是数据和方法的简单封装。一般而言，组件是 app 中内容的最小表达单位，属于业务的抽象对象，具有多次复用的能力。
 
-作为表单的成员，他们共同构成了表单界面常规表现所需的模型结构，并在其中承担不同的更深层次的子内容展示。
+在埃毕致的前端模型中，并没有定义组件的概念，而是抽象了更深层次的模型化对象部件。部件具备了组件的基本能力，同时具有更大程度的数据交互和内容绘制能力。在本章节中，组件即为部件，我们主要介绍部件模型对象。
+
+前端模型根据不同业务数据表现，将其抽象成不同的业务对象，常见的有表单、表格、树、图表和日历等.
+
+模型如下：
+
+| 部件    | 模型名称       | 详情                                                         | 备注    |
+| ------- | -------------- | ------------------------------------------------------------ | ------- |
+| 工具栏  | 实体工具栏控件 | [ IPSDEToolbar](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/toolbar/IPSDEToolbar) |         |
+| 表格    | 实体表格       | [ IPSDEGrid](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/grid/IPSDEGrid) |         |
+| 表单    | 实体表单       | [ IPSDEForm](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/form/IPSDEForm) |         |
+| 树      | 实体树视图部件 | [ IPSDETree](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/tree/IPSDETree) |         |
+| 菜单    | 应用菜单       | [ IPSAppMenu](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/menu/IPSAppMenu) |         |
+| 图表    | 实体图表控件   | [ IPSDEChart](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/chart/IPSDEChart) |         |
+| 日历    | 日历部件       | [ IPSCalendar](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/calendar/IPSCalendar) |         |
+| 向导    | 实体向导面板   | [IPSDEWizardPanel](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/wizardpanel/IPSDEWizardPanel) |         |
+| 列表    | 实体列表控件   | [IPSDEList](https://modelapi.ibizlab.cn/#/net/ibizsys/model/control/list/IPSDEList) |         |
+| .  .  . | .  .  .        | .  .  .                                                      | .  .  . |
+
+基于部件模型，可以构建不同的部件组合方式，以下图为例。
+
+![部件组合1](imgs/control1.png)
+
+​                                                                                      图示1
+
+![部件组合2](imgs/control2.png)
+
+​                                                                                      图示2
+
+在上述两个图视中，分别向我们展示了基于业务模型需要，使用不同部件模型之间的组合，生成不同的部件内容。其中，使用了一个工具栏对象，在消费不同的模型业务，细化不同业务场景。
+
+> 注：上述示例中，蓝色链接部分，是逻辑在组件内的使用方式，
+
+
+
+#### 组件成员
+
+在常规的开发中，组件成员比较少见。很多的开发人员，基本将所需的组件内容一次性构建完成，不做细化的处理。
+
+但是，这样的方式对于局部功能相同的内容，没有办法复用，每个组件内容，都要维护对于的内容效果。对于批量的需求修改，不是一个恰当的方式。
+
+
+
+#### 提示消息
+
+提示消息，在组件中，同样提供相应的业务说明能力，也同样具有静态与冬天的区别。与视图提示消息不一样的是，组件中的动态消息，一般是为组件方法逻辑提供。
+
+组件方法逻辑，对数据做处理后，一般不同的提示效果。
+
+埃毕致的前端模型适配了逻辑处理不同提示消息，在前端的交互效果上，填补了消息提示的单一性。
+
+模型如下：
+
+| 模型名称 | 详情                                                         | 备注 |
+| -------- | ------------------------------------------------------------ | ---- |
+| 部件消息 | [ IPSCtrlMsg](https://modelapi.ibizlab.cn/#/net/ibizsys/model/res/IPSCtrlMsg) |      |
+
+#### 
+
+#### 逻辑
+
+逻辑在组件中，和逻辑在视图中，除场景模式之外，其他基本类似，此处不做更多介绍。
+
+
 
 ## 数据服务
 
-数据服务，属于应用中业务能力抽象处理的中间层。常见的由公共 API 管理对象，提供部分逻辑处理，为界面提供数据。
+数据服务，属于应用中业务能力抽象处理的中间层。
 
-提供数据服务方式及特点如下：
+详情如下：
 
+- 权限：权限是服务关键的一个部分，一般使用请求路径分级赋值授权。
+- API：公共的 API 管理。
+- 数据格式化：将获取的数据格式化处，一般为对象化处理。
 - 远程：通过 http 请求获取数据，具有前台与后台的交互过程，在处理请求时，同时提供其他功能。
-  - 权限：请求过程动态授权。
-  - API：公共的 API 管理。
-  - 数据格式化：将获取的数据格式化处。
-  - 多维数据约束：使用数据关系能力约束。
 - 本地：在浏览器中获取数据。
   - 缓存：从浏览器中获取数据，解析获取所需部分。
   - 数据库：从浏览器数据库中读取数据。
+
+
 
 数据服务在现有的技术框架中，Angular 的服务对象，基本能合适的匹配数据服务功能。该框架中的服务对象，对每个组件提供服务能力，其中有数据获取、API 维护和数据格式化等常见功能。
 
@@ -198,6 +242,8 @@
 
 在上述代码示例中，基于数据关系的能力，在 URL 中通过层级访问路径得以体现。数据对象的主键作为约束能力的部分内容，成为了权限和多维数据约束在实际应用中的具体场景。
 
+
+
 ## 元数据
 
  元数据是关于数据的组织、数据域及其关系的信息，简言之，元数据就是关于数据的数据。
@@ -205,7 +251,7 @@
 其成员如下：
 
 - 元素：数据成员，构成元数据的基本组成的单位。
-- 元素值规则：元素基本类别，如文本、时间、数值等，另外提供复杂值规则，如正则、值范围等等。
+- 数据字典： 数据信息的集合 。
 - 数据模型：提供的数据结构。
 - 数据关系：对象之间的主从关系，表现为数据之间的约束。
 - Mock 数据：模拟真实业务数据。
